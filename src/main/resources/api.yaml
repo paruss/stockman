@@ -2,17 +2,19 @@ openapi: 3.0.0
 info:
   version: 1.0.0
   title: Stocks API
-  description: An api for adding stocks to a portfolio
+  description: An API for managing stocks and positions in a portfolio
+
 paths:
   /stocks:
     post:
+      summary: Adds a new stock
+      operationId: addStock
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Stock'
-      description: Adds a new stock
       responses:
         '201':
           description: Created new stock
@@ -20,6 +22,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Stock'
+
+  /positions:
+    post:
+      summary: Adds a new position
+      operationId: addPosition
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Position'
+      responses:
+        '201':
+          description: Created new position
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+
 components:
   schemas:
     Stock:
@@ -31,3 +52,17 @@ components:
         name:
           type: string
           description: The name of the stock
+
+    Position:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          description: Number of shares
+        price:
+          type: number
+          format: float
+          description: Purchase price of position
+        symbol:
+          type: string
+          description: Stock Symbol

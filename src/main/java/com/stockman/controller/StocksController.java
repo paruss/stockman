@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class StocksController implements StocksApi {
     @Override
-    public ResponseEntity<Stock> stocksPost(Stock stock) {
+    public ResponseEntity<Stock> addStock(Stock stock) {
         return ResponseEntity.ok().body(stock);
     }
 }
