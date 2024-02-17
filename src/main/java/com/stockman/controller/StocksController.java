@@ -10,10 +10,8 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class StocksController implements StocksApi {
 
-    private PortfolioService portfolioService;
     @Override
     public ResponseEntity<Stock> addStock(Stock stock) {
-        portfolioService.addStockToPortfolio(stock);
         return ResponseEntity.ok().body(stock);
     }
 }
