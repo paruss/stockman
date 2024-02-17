@@ -1,12 +1,19 @@
 package com.stockman.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class PortfolioItem {
 
     @Id
@@ -16,8 +23,18 @@ public class PortfolioItem {
             generator = "portfolio_item_seq"
     )
     private Long id;
+    private BigDecimal portfolioId;
 
     private String symbol;
     private Integer quantity;
     private Float averagePrice;
+    // Created timestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "purchase_date")
+    private Date purchaseDate;
+
+    @PrePersist
+    protected void onCreate() {
+        purchaseDate = new Date();
+    }
 }

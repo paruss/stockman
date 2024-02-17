@@ -14,11 +14,10 @@ public class PortfolioService {
 
     private PortfolioRepository portfolioRepository;
     public void addStockToPortfolio(Position position){
-        PortfolioItem existingStock = portfolioRepository.save(PortfolioItem.builder()
-                .quantity(position.getQuantity()).averagePrice(position.getPrice()).symbol(position.getSymbol()).build());
+        PortfolioItem existingStock = portfolioRepository.findBySymbolAndPortfolioId(position.getSymbol(), position.getPortfolioId());
         if(existingStock == null){
-            PortfolioItem portfolioItem = PortfolioItem.builder().symbol(position.getSymbol()).build();
-            portfolioRepository.save(portfolioItem);
+            portfolioRepository.save(PortfolioItem.builder()
+                    .quantity(position.getQuantity()).averagePrice(position.getPrice()).symbol(position.getSymbol()).portfolioId(position.getPortfolioId()).build());
         }
         log.info("Existing stock is " , existingStock.getSymbol());
     }
