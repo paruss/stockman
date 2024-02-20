@@ -66,3 +66,6 @@ components:
         symbol:
           type: string
           description: Stock Symbol
+        portfolioId:
+          type: number
+          description: The ID for the portfolio to add the position to

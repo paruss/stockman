@@ -14,11 +14,25 @@ public class PortfolioService {
 
     private PortfolioRepository portfolioRepository;
     public void addStockToPortfolio(Position position){
-        PortfolioItem existingStock = portfolioRepository.findBySymbolAndPortfolioId(position.getSymbol(), position.getPortfolioId());
+        PortfolioItem existingStock = portfolioRepository.findBySymbolAndPortfolioId(position.getSymbol(),
+                position.getPortfolioId());
         if(existingStock == null){
             portfolioRepository.save(PortfolioItem.builder()
-                    .quantity(position.getQuantity()).averagePrice(position.getPrice()).symbol(position.getSymbol()).portfolioId(position.getPortfolioId()).build());
+                    .quantity(position.getQuantity()).averagePrice(position.getPrice()).symbol(position.getSymbol())
+                    .portfolioId(position.getPortfolioId()).build());
+        }else{
+            log.info("Existing stock is {}" , existingStock.getSymbol());
+            Integer existingQuantity = existingStock.getQuantity();
+            Float newAverage = calculateNewAverage(existingStock, position.getQuantity(), position.getPrice());
+
+            existingStock.setQuantity(existingQuantity + position.getQuantity());
+            portfolioRepository.save(existingStock);
         }
-        log.info("Existing stock is " , existingStock.getSymbol());
+
+    }
+
+    private Float calculateNewAverage(PortfolioItem existingStock, Integer quantity, Float price) {
+        return null;
+        //TODO logic to calcualte average
     }
 }
