@@ -40,6 +40,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Position'
+  /positionPerformance:
+    get:
+      summary: Get position performance data
+      description: Retrieve performance data for a specific stock symbol
+      parameters:
+        - name: symbol
+          in: query
+          description: Stock symbol (e.g., AAPL for Apple Inc.)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PositionPerformance'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+      # Add security requirements if needed
 
 components:
   schemas:
@@ -69,3 +92,9 @@ components:
         portfolioId:
           type: number
           description: The ID for the portfolio to add the position to
+    PositionPerformance:
+      type: object
+      properties:
+        performance:
+          type: string
+          description: performance in percent
