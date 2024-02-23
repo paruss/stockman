@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 @Slf4j
 @AllArgsConstructor
@@ -31,7 +33,12 @@ public class PortfolioService {
 
     }
 
-    private Float calculateNewAverage(PortfolioItem existingStock, Integer quantity, Float price) {
+    public BigDecimal getCurrentAveragePrice(String symbol, Integer portfolioId){
+        PortfolioItem portfolioItem = portfolioRepository.findBySymbolAndPortfolioId(symbol, portfolioId);
+        return portfolioItem.getAveragePrice();
+    }
+
+    private Float calculateNewAverage(PortfolioItem existingStock, Integer quantity, BigDecimal price) {
         return null;
         //TODO logic to calcualte average
     }

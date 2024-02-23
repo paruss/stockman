@@ -157,7 +157,10 @@
                         <supportingFilesToGenerate>
                             ApiUtil.java
                         </supportingFilesToGenerate>
-                    </configuration>
+                        <typeMappings>
+                                <typeMapping>Double=java.math.BigDecimal</typeMapping>
+                        </typeMappings>
+                        </configuration>
                 </execution>
             </executions>
         </plugin>

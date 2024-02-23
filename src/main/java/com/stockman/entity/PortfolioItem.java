@@ -23,11 +23,11 @@ public class PortfolioItem {
             generator = "portfolio_item_seq"
     )
     private Long id;
-    private BigDecimal portfolioId;
+    private Integer portfolioId;
 
     private String symbol;
     private Integer quantity;
-    private Float averagePrice;
+    private BigDecimal averagePrice;
     // Created timestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "purchase_date")

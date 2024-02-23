@@ -84,17 +84,17 @@ components:
           description: Number of shares
         price:
           type: number
-          format: float
+          format: double
           description: Purchase price of position
         symbol:
           type: string
           description: Stock Symbol
         portfolioId:
-          type: number
+          type: integer
           description: The ID for the portfolio to add the position to
     PositionPerformance:
       type: object
       properties:
         performance:
-          type: string
+          type: double
           description: performance in percent
