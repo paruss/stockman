@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Stocks API
+  description: An API for managing stocks and positions in a portfolio
+
+paths:
+  /stocks:
+    post:
+      summary: Adds a new stock
+      operationId: addStock
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Stock'
+      responses:
+        '201':
+          description: Created new stock
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stock'
+
+  /positions:
+    post:
+      summary: Adds a new position
+      operationId: addPosition
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Position'
+      responses:
+        '201':
+          description: Created new position
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+  /positionPerformance:
+    get:
+      summary: Get position performance data
+      description: Retrieve performance data for a specific stock symbol
+      parameters:
+        - name: symbol
+          in: query
+          description: Stock symbol (e.g., AAPL for Apple Inc.)
+          required: true
+          schema:
+            type: string
+        - name: portfolioId
+          in: query
+          description: ID of portfolio
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PositionPerformance'
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+      # Add security requirements if needed
+
+components:
+  schemas:
+    Stock:
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: The stock symbol
+        name:
+          type: string
+          description: The name of the stock
+
+    Position:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          description: Number of shares
+        price:
+          type: number
+          format: double
+          description: Purchase price of position
+        symbol:
+          type: string
+          description: Stock Symbol
+        portfolioId:
+          type: integer
+          description: The ID for the portfolio to add the position to
+    PositionPerformance:
+      type: object
+      properties:
+        performance:
+          type: double
+          description: performance in percent
