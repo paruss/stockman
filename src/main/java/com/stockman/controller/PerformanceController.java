@@ -2,7 +2,6 @@ package com.stockman.controller;
 
 import com.baeldung.openapi.api.PositionPerformanceApi;
 import com.baeldung.openapi.model.PositionPerformance;
-import com.stockman.FinnhubClient;
 import com.stockman.service.PerformanceService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +16,8 @@ public class PerformanceController implements PositionPerformanceApi {
     private PerformanceService performanceService;
 
     @Override
-    public ResponseEntity<PositionPerformance> positionPerformanceGet(String symbol) {
-        BigDecimal result = performanceService.calculatePerformance(symbol);
+    public ResponseEntity<PositionPerformance> positionPerformanceGet(String symbol, Integer portfolioId) {
+        BigDecimal result = performanceService.calculatePerformance(symbol, portfolioId);
         PositionPerformance positionPerformance = new PositionPerformance();
         positionPerformance.setPerformance(result);
         return ResponseEntity.ok(positionPerformance);

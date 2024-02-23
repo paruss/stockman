@@ -51,6 +51,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: portfolioId
+          in: query
+          description: ID of portfolio
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
           description: Successful response
