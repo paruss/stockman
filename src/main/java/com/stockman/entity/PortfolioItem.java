@@ -27,7 +27,7 @@ public class PortfolioItem {
 
     private String symbol;
     private Integer quantity;
-    private BigDecimal averagePrice;
+    private BigDecimal price;
     // Created timestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "purchase_date")
