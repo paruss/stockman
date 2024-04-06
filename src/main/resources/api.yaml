@@ -97,7 +97,10 @@ components:
           description: Stock Symbol
         portfolioId:
           type: integer
-          description: The ID for the portfolio to add the position to
+          description: The ID for the portfolio to add the position
+        isBuy:
+          type: boolean
+          description: Whether the trade is a buy (true) sell (false)
     PositionPerformance:
       type: object
       properties:

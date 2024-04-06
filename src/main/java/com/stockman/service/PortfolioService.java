@@ -20,10 +20,13 @@ public class PortfolioService {
     private PortfolioRepository portfolioRepository;
     private FinnhubClient finnhubClient;
     public void addStockToPortfolio(Position position){
+        try{
             portfolioRepository.save(PortfolioItem.builder()
                     .quantity(position.getQuantity()).price(position.getPrice()).symbol(position.getSymbol())
-                    .portfolioId(position.getPortfolioId()).build());
-
+                    .portfolioId(position.getPortfolioId()).isBuy(position.getIsBuy()).build());
+        }catch (Exception e){
+            log.error("Something has gone wrong adding stock to portfolio");
+        }
     }
 
     public BigDecimal getCurrentAveragePrice(String symbol, Integer portfolioId){
@@ -36,13 +39,13 @@ public class PortfolioService {
         //TODO logic to calcualte average
     }
 
-    public List<TradeRecommendation> getTradeRecommendations() {
-        List<PortfolioItem> lastTradesForEachStock = portfolioRepository.findMostRecentTradesByPortfolioId(1);
+    public List<TradeRecommendation> getTradeRecommendations(Integer portfolioId) {
+        List<PortfolioItem> lastTradesForEachStock = portfolioRepository.findMostRecentTradesByPortfolioId(portfolioId);
         return lastTradesForEachStock.stream()
                 .map(trade -> {
                     BigDecimal previousPrice = trade.getPrice();
                     BigDecimal currentPrice = finnhubClient.getStockPrice(trade.getSymbol());
-                    TradeRecommendation.Action action = getAction(currentPrice, previousPrice);
+                    TradeRecommendation.Action action = getAction(currentPrice, previousPrice, trade.getIsBuy());
 
                     return TradeRecommendation.builder()
                             .symbol(trade.getSymbol())
@@ -53,7 +56,7 @@ public class PortfolioService {
                 .toList();
     }
 
-    private static TradeRecommendation.Action getAction(BigDecimal currentPrice, BigDecimal previousPrice) {
+    private static TradeRecommendation.Action getAction(BigDecimal currentPrice, BigDecimal previousPrice, Boolean isBuy) {
         BigDecimal priceChangePercentage = currentPrice.subtract(previousPrice).divide(previousPrice, 2, BigDecimal.ROUND_HALF_UP)
                 .multiply(BigDecimal.valueOf(100));
 

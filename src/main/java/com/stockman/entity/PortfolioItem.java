@@ -32,6 +32,7 @@ public class PortfolioItem {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "purchase_date")
     private Date purchaseDate;
+    private Boolean isBuy;
 
     @PrePersist
     protected void onCreate() {
